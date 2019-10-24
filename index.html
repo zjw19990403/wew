@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>企业员工工资管理系统</title>
+<script type="text/javascript">
+			
+			var index = 1;
+			var p1 = {
+				"id":index,
+				"name":"张伟",
+				"b1":"前端工程师",
+				"b2":8000,
+				"b3":"30",
+				"a1":"6",
+				"a2":23650,
+				"a3":0,
+				"a4":2800,
+				"a5":20850,
+			};
+			index++;
+			var p2 = {
+				"id":index,
+				"name":"王伟",
+				"b1":"后端工程师",
+				"b2":9000,
+				"b3":"30",
+				"a1":"6",
+				"a2":26800,
+				"a3":100,
+				"a4":2970,
+				"a5":23730,
+			};
+			index++;
+			var p = new Array();//var p = [];
+			p.push(p1);
+			p.push(p2);
+			/**显示人员信息**/
+			function showPerson(){
+				//显示表格
+				var table1 = document.getElementById("table1");
+				table1.style = "";
+				var str = "<tr> <th>序号</th><th>姓名</th><th>岗位</th><th>基本工资</th><th>在职天数</th><th>加班天数</th><th>应发工资</th><th>应扣工资</th><th>（代）扣金额</th><th>实发工资</th><th colspan='2'>操作</th> </tr>";
+				for(var i=0;i<p.length;i++){
+					var a = p[i];
+					str += "<tr> <td>"+a.id+"</td><td>"+a.name+"</td><td>"+a.b1+"</td><td>"+a.b2+"</td><td>"+a.b3+"</td> <td>"+a.a1+"</td><td>"+a.a2+"</td><td>"+a.a3+"</td><td>"+a.a4+"</td><td>"+a.a5+"</td><td><button type='button' onclick='deletePerson("+a.id+")'>删除</button></td><td><button type='button' onclick='showUpdatePerson("+a.id+")'>更新</button></td> </tr>";
+				}
+				table1.innerHTML = str;
+			}
+			/**显示新增人员信息**/
+			function showAddPerson(){
+				//隐藏更新人员界面
+				var div3 = document.getElementById("div3");
+				div3.style = "display: none;";
+				var div2 = document.getElementById("div2");
+				div2.style = "";	
+			}
+			/**新增人员信息**/
+			function addPerson(){
+				var field2 = document.getElementById("field2");
+				var a = {};//var a = new Array();
+				// var a = p[index-1];
+				a.id = index;
+				a.name = document.getElementById("name").value;
+				a.b2 = document.getElementById("b2").value;
+				a.b1 = document.getElementById("b1").value;
+				a.b3 = document.getElementById("b3").value;
+				a.a1 = document.getElementById("a1").value;
+				a.a2 = document.getElementById("a2").value;
+				a.a3 = document.getElementById("a3").value;
+				a.a4 = document.getElementById("a4").value;
+				a.a5 = document.getElementById("a5").value;
+				// alert(a.id+" "+a.name+" "+a.old+" "+a.sex+" "+a.area +" ");
+				index++;
+				//数组添加表单的值
+				p.push(a);
+				//添加之后重新查询表单
+				showPerson();
+				
+			}
+			/**取消按钮，隐藏表单**/
+			function cancel(){
+				//隐藏新增人员信息界面
+				var div2 = document.getElementById("div2");
+				div2.style = "display: none;";
+				//隐藏更新人员信息界面
+				var div3 = document.getElementById("div3");
+				div3.style = "display: none;";
+			}
+			/**根据id删除人员信息**/
+			function deletePerson(id){
+				var flag = confirm("确定删除？");
+				if(flag){
+					for(var i=0;i<p.length;i++){
+						var a = p[i];
+						if(a.id == id){
+							p.splice(i,1);//从第i个位置开始删除一个元素
+						}
+					}
+				}
+				//删除完毕重新加载表单
+				showPerson();
+			}
+			/**根据id修改人员信息**/
+			function showUpdatePerson(id){
+				//隐藏添加人员界面
+				var div2 = document.getElementById("div2");
+				div2.style = "display: none;";
+				//显示更新人员界面
+				var div3 = document.getElementById("div3");
+				div3.style = "";
+				//根据id遍历数组得到要修改的值,然后用document对象进行修改
+				for(var i=0;i<p.length;i++){
+					var a = p[i];
+					if(a.id == id){
+						document.getElementById("uname").value = a.name;
+						document.getElementById("ub2").value = a.b2;
+						document.getElementById("ub1").value = a.b1;
+						document.getElementById("ub3").value = a.b3;
+						document.getElementById("uid").value = a.id;
+						document.getElementById("ua1").value = a.a1;
+						document.getElementById("ua2").value = a.a2;
+						document.getElementById("ua3").value = a.a3;
+						document.getElementById("ua4").value = a.a4;
+						document.getElementById("ua5").value = a.a5;
+					}
+				}
+			}
+			function updatePerson(){
+				var id = document.getElementById("uid").value;
+				//再根据id把表单中的value值存入对于的p[]i数组中
+				for(var i=0;i<p.length;i++){
+					var a = p[i];
+					if(a.id == id){
+						p[i].name = document.getElementById("uname").value;
+						p[i].b2 = document.getElementById("ub2").value;
+						p[i].b1 = document.getElementById("ub1").value;
+						p[i].b3 = document.getElementById("ub3").value;
+						p[i].a1 = document.getElementById("ua1").value;
+						p[i].a2 = document.getElementById("ua2").value;
+						p[i].a3 = document.getElementById("ua3").value;
+						p[i].a4 = document.getElementById("ua4").value;
+						p[i].a5 = document.getElementById("ua5").value;
+					}
+				}
+				//重新调用表单刷新
+				showPerson();
+				//隐藏添加人员界面
+				var div3 = document.getElementById("div3");
+				div3.style = "display: none;";
+			}
+		</script>
+</head>
+<body>
+<button type="button" onclick="showPerson()">显示人员信息</button>
+		<button type="button" onclick="showAddPerson()">新增人员信息</button>
+		<hr >
+		<!-- 表格信息 -->
+		<div id="div1">
+			<table border="1" style="display: none;" id="table1"cellspacing="2" cellpadding="2">
+			<!-- <tr> <th>编号</th><th>姓名</th><th>性别</th><th>年龄</th><th>籍贯</th><th colspan="2">操作</th> </tr>
+				<tr> <td>v.编号</td><td>v.姓名</td><td>v.性别</td><td>v.年龄</td><td>v.籍贯</td><td><button type="button" onclick="">删除</button></td><td><button type="button">更新</button></td> </tr>
+			 --></table>
+		</div>
+		<!-- 新增人员信息 -->
+		<div id="div2" style="display: none;">
+			<fieldset id="field2">
+				<legend>新增人员信息</legend>
+				<input type="hidden" name="id" id="uid"/>
+				姓名：<input type="text" name="name" id="name" value="王芳" /><br>
+				基本工资：<input type="number" name="b2" id="b2" value="6000" /><br>
+				岗位：
+				<select id="b1" required="required">
+					<option value ="">--请选择--</option>
+					<option value ="前端工程师" selected="selected">前端工程师</option>
+					<option value ="后端工程师">后端工程师</option>
+				</select><br>
+				在职天数：<input type="text" name="b3" id="b3" value="30" /><br>
+                加班天数：<input type="text" name="a1" id="a1" value="6" /><br>
+                应发工资：<input type="number" name="a2" id="a2" value="15300" /><br>
+                应扣工资：<input type="number" name="a3" id="a3" value="0" /><br>
+               （代）扣金额：<input type="number" name="a4" id="a4" value="1450" /><br>
+                实发工资：<input type="number" name="a5" id="a5" value="13850" /><br>
+				<button type="button" onclick="addPerson()">确定</button>
+				<button type="button" onclick="cancel()">取消</button>
+			</fieldset>
+		</div>
+		<!-- 更新人员信息 -->
+		<div id="div3" style="display: none;" name="div3">
+			<fieldset id="field3">
+				<legend>更新人员信息</legend>
+				姓名：<input type="text" name="name" id="uname"/><br>
+				基本工资：<input type="number" name="b2" id="ub2"/><br>
+				岗位：
+				<select id="ub1" required="required">
+					<option value ="">--请选择--</option>
+					<option value ="前端工程师" >前端工程师</option>
+					<option value ="后端工程师">后端工程师</option>
+				</select><br>
+				在职天数：<input type="text" name="b3" id="ub3" /><br>
+                加班天数：<input type="text" name="a1" id="ua1" /><br>
+                应发工资：<input type="number" name="a2" id="ua2"/><br>
+                应扣工资：<input type="number" name="a3" id="ua3"/><br>
+               （代）扣金额：<input type="number" name="a4" id="ua4"/><br>
+                实发工资：<input type="number" name="a5" id="ua5"/><br>
+				<button type="button" onclick="updatePerson()">确定</button>
+				<button type="button" onclick="cancel()">取消</button>
+			</fieldset>
+		</div>
+</body>
+</html>
